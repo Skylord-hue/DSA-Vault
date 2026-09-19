@@ -1,0 +1,7 @@
+# Binaries and build artifacts
+output/
+*.o
+*.out
+*.exe
+*.dSYM/
+.DS_Store
