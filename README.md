@@ -2,7 +2,7 @@
 [![Language](https://img.shields.io/badge/Language-C%2B%2B20-blue.svg)](https://en.cppreference.com/w/cpp/20)
 [![LeetCode](https://img.shields.io/badge/LeetCode-ShadowDebugger-orange.svg)](https://leetcode.com/u/ShadowDebugger)
 [![Institution](https://img.shields.io/badge/Institution-NIT%20Kurukshetra-green.svg)](http://www.nitkkr.ac.in)
-[![Problems Solved](https://img.shields.io/badge/Verified%20Solutions-20%2B-purple.svg)](#-problem-index)
+[![Problems Solved](https://img.shields.io/badge/Verified%20Solutions-30%2B-purple.svg)](#-problem-index)
 
 Curated repository of algorithmic solutions, graph traversals, tree architectures, and dynamic programming patterns implemented in **modern C++20** with strict adherence to asymptotic bounds and space-time optimality.
 
@@ -31,6 +31,12 @@ DSA/Code/
 | **Climbing Stairs** | [`climbing_stairs.cpp`](DP/climbing_stairs.cpp) | `O(N)` | `O(1)` | Combinatorial state reduction |
 | **House Robber II (LeetCode 213)** | [`house_robber_ii.cpp`](DP/house_robber_ii.cpp) | `O(N)` | `O(1)` | Circular adjacency split into two linear subproblems |
 | **Frog Jump & K-Distance** | [`frog_jump.cpp`](DP/frog_jump.cpp) | `O(N)` | `O(1)` | Optimal substructure minimization over predecessor DAG |
+| **Coin Change** | [`coin_change.cpp`](DP/coin_change.cpp) | `O(N*Target)` | `O(Target)` | Unbounded Knapsack (Min elements) |
+| **Coin Change II** | [`coin_change_ii.cpp`](DP/coin_change_ii.cpp) | `O(N*Target)` | `O(Target)` | Unbounded Knapsack (Combinations outer loop) |
+| **Perfect Squares** | [`perfect_squares.cpp`](DP/perfect_squares.cpp) | `O(N*sqrt(N))` | `O(N)` | Unbounded Knapsack with perfect squares |
+| **Last Stone Weight II** | [`last_stone_weight_ii.cpp`](DP/last_stone_weight_ii.cpp) | `O(N*Sum/2)` | `O(Sum/2)` | 0/1 Knapsack subset-sum reduction |
+| **Partition Equal Subset Sum** | [`partition_equal_subset_sum.cpp`](DP/partition_equal_subset_sum.cpp) | `O(N*Sum/2)` | `O(Sum/2)` | 0/1 Knapsack Target = Sum / 2 |
+| **Target Sum** | [`target_sum.cpp`](DP/target_sum.cpp) | `O(N*Target)` | `O(Target)` | Math reduction to Subset Sum `(total+target)/2` |
 
 ### 🕸️ Graphs (`Graphs/`)
 | Problem / Algorithm | File | Time Complexity | Space Complexity | Key Pattern |
