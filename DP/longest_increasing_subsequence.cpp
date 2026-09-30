@@ -49,6 +49,39 @@ public:
         vector<vector<int>> dp(n, vector<int>(n + 1, -1));
         return helperMemo(nums, 0, -1, dp);
     }
+
+    // ----------------------------------------------------
+    // APPROACH 2: 1D Tabulation (Your exact logic!)
+    // Time: O(N^2), Space: O(N)
+    // ----------------------------------------------------
+    int lengthOfLISTabulation(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 0) return 0;
+        
+        // 1. "we don't have any value, so we will analyze it to..."
+        // Initialize DP array. Every element is a subsequence of length 1 by default!
+        vector<int> dp(n, 1);
+        int maxLIS = 1; // Track the absolute maximum we find anywhere
+        
+        // 2. "if you are at any eye index... loop it for the end value"
+        for (int i = 0; i < n; i++) {
+            
+            // 3. "check the already answered... from the previous one"
+            for (int prev = 0; prev < i; prev++) {
+                
+                // 4. "if it is greater than..."
+                if (nums[i] > nums[prev]) {
+                    // "...we will add that value to the previous value we had"
+                    dp[i] = max(dp[i], dp[prev] + 1);
+                }
+            }
+            
+            // We just keep track of the maximum value we ever store in our DP
+            maxLIS = max(maxLIS, dp[i]);
+        }
+        
+        return maxLIS;
+    }
 };
 
 int main() {
@@ -57,15 +90,21 @@ int main() {
     
     vector<int> nums1 = {10, 9, 2, 5, 3, 7, 101, 18};
     cout << "Input: nums = [10, 9, 2, 5, 3, 7, 101, 18]\n";
-    cout << "Output: " << sol.lengthOfLIS(nums1) << " \nExpected: 4\n\n";
+    cout << "Output (Memoization): " << sol.lengthOfLIS(nums1) << "\n";
+    cout << "Output (Tabulation):  " << sol.lengthOfLISTabulation(nums1) << "\n";
+    cout << "Expected: 4\n\n";
     
     vector<int> nums2 = {0, 1, 0, 3, 2, 3};
     cout << "Input: nums = [0, 1, 0, 3, 2, 3]\n";
-    cout << "Output: " << sol.lengthOfLIS(nums2) << " \nExpected: 4\n\n";
+    cout << "Output (Memoization): " << sol.lengthOfLIS(nums2) << "\n";
+    cout << "Output (Tabulation):  " << sol.lengthOfLISTabulation(nums2) << "\n";
+    cout << "Expected: 4\n\n";
 
     vector<int> nums3 = {7, 7, 7, 7, 7, 7, 7};
     cout << "Input: nums = [7, 7, 7, 7, 7, 7, 7]\n";
-    cout << "Output: " << sol.lengthOfLIS(nums3) << " \nExpected: 1\n\n";
+    cout << "Output (Memoization): " << sol.lengthOfLIS(nums3) << "\n";
+    cout << "Output (Tabulation):  " << sol.lengthOfLISTabulation(nums3) << "\n";
+    cout << "Expected: 1\n\n";
 
     return 0;
 }

@@ -90,6 +90,90 @@ public:
         vector<vector<int>> memo(word1.size(), vector<int>(word2.size(), -1));
         return helperMemo(word1, word2, 0, 0, memo);
     }
+
+    // ----------------------------------------------------
+    // APPROACH 3: Bottom-Up Tabulation (Your logic!)
+    // Time: O(M*N), Space: O(M*N)
+    // ----------------------------------------------------
+    int minDistanceTabulation(string word1, string word2) {
+        int m = word1.size();
+        int n = word2.size();
+        
+        // Setup DP matrix of size (M+1) x (N+1)
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        
+        // "if one of the word characters finish first, we will just count the word for the another one"
+        // Base Case 1: word1 finishes first, we insert the rest of word2
+        for (int j = 0; j <= n; j++) {
+            dp[m][j] = n - j;
+        }
+        // Base Case 2: word2 finishes first, we delete the rest of word1
+        for (int i = 0; i <= m; i++) {
+            dp[i][n] = m - i;
+        }
+        
+        // Run loops backwards exactly mirroring the memoization logic
+        for (int i = m - 1; i >= 0; i--) {
+            for (int j = n - 1; j >= 0; j--) {
+                
+                if (word1[i] == word2[j]) {
+                    // Match: Move both pointers (Diagonal)
+                    dp[i][j] = dp[i + 1][j + 1];
+                } else {
+                    // Mismatch: 1 + min(replace, delete, insert)
+                    int replace_op = 1 + dp[i + 1][j + 1];
+                    int delete_op  = 1 + dp[i + 1][j];
+                    int insert_op  = 1 + dp[i][j + 1];
+                    
+                    dp[i][j] = min({replace_op, delete_op, insert_op});
+                }
+            }
+        }
+        
+        // Target state is exactly the start of both words
+        return dp[0][0];
+    }
+    // ----------------------------------------------------
+    // APPROACH 4: Forward Tabulation (Your brilliant idea!)
+    // Time: O(M*N), Space: O(M*N)
+    // ----------------------------------------------------
+    int minDistanceForwardTabulation(string word1, string word2) {
+        int m = word1.size();
+        int n = word2.size();
+        
+        // Setup DP matrix of size (M+1) x (N+1)
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        
+        // Base Case: Match prefix of word1 with empty word2 (costs i deletes)
+        for (int i = 0; i <= m; i++) {
+            dp[i][0] = i;
+        }
+        // Base Case: Match prefix of word2 with empty word1 (costs j inserts)
+        for (int j = 0; j <= n; j++) {
+            dp[0][j] = j;
+        }
+        
+        // Loop FORWARD!
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                
+                if (word1[i - 1] == word2[j - 1]) {
+                    // Match: Grab the cost from the prefix without these two chars
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    // Mismatch: 1 + min(replace, delete, insert)
+                    int replace_op = 1 + dp[i - 1][j - 1];
+                    int delete_op  = 1 + dp[i - 1][j];
+                    int insert_op  = 1 + dp[i][j - 1];
+                    
+                    dp[i][j] = min({replace_op, delete_op, insert_op});
+                }
+            }
+        }
+        
+        // Target state is the end of both words!
+        return dp[m][n];
+    }
 };
 
 int main() {
@@ -98,11 +182,17 @@ int main() {
     
     string w1 = "horse", w2 = "ros";
     cout << "Input: word1 = \"" << w1 << "\", word2 = \"" << w2 << "\"\n";
-    cout << "Output: " << sol.minDistance(w1, w2) << " \nExpected: 3\n\n";
+    cout << "Output (Memoization): " << sol.minDistance(w1, w2) << "\n";
+    cout << "Output (Backward Tab): " << sol.minDistanceTabulation(w1, w2) << "\n";
+    cout << "Output (Forward Tab):  " << sol.minDistanceForwardTabulation(w1, w2) << "\n";
+    cout << "Expected: 3\n\n";
     
     string w3 = "intention", w4 = "execution";
     cout << "Input: word1 = \"" << w3 << "\", word2 = \"" << w4 << "\"\n";
-    cout << "Output: " << sol.minDistance(w3, w4) << " \nExpected: 5\n\n";
+    cout << "Output (Memoization): " << sol.minDistance(w3, w4) << "\n";
+    cout << "Output (Backward Tab): " << sol.minDistanceTabulation(w3, w4) << "\n";
+    cout << "Output (Forward Tab):  " << sol.minDistanceForwardTabulation(w3, w4) << "\n";
+    cout << "Expected: 5\n\n";
 
     return 0;
 }
